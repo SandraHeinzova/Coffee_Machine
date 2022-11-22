@@ -1,11 +1,6 @@
 from source_data import MENU
 from source_data import resources
-
-# ceny nápojů
-espresso_price = MENU ['espresso']['cost']
-latte_price = MENU ['latte']['cost']
-cappuccino_price = MENU ['cappuccino']['cost']
-
+from coffee_machine_logo import logo
 
 # kontrola ingrediencí
 def check_ingredients(drink):
@@ -40,33 +35,40 @@ def payment(drink):
     totall = int(payment_1*1 + payment_2*2 + payment_5*5 + payment_10*10 + payment_20*20 + payment_50*50)
     
     print(f"Celkem jste vložili {totall}Kč")
-    print(f"Cena {drink} je {MENU [drink]['cost']}")
+    print(f"Cena {drink} je {MENU [drink]['cost']} Kč")
     
     if totall > MENU[drink]['cost']:
         print(f"Zde máte nazpět {totall - MENU [drink]['cost']}Kč")
         return True
     elif totall < MENU [drink]['cost']:
-        print("Nevložili jste dostatek k zaplacení Vašeho nápoje.")
+        print("Nevložili jste dostatečný obnos peněz k zaplacení Vašeho nápoje.")
+        payment(drink)
+        return True
     else:
         print("Platba byla přesná, děkujeme.")
+        return True
     
     
     
 
 def coffee_machine():
+    print (logo)
     while True:
-        drink = input("Co byste si dal? (espresso/latte/cappuccino): ")        
+        drink = input("Co byste si dal? (espresso/latte/cappuccino): Pro vypnutí automatu napište 'konec'. " ).lower()        
         try:
             if drink == "report":
                 print(f"Voda: {resources['water']}")
                 print(f"Mléko: {resources['milk']}")
                 print(f"Káva: {resources['coffee']}")
+            elif drink == "konec":
+                print("Děkujeme, že jste využili tento automat na kávu.")
+                break
             elif drink == drink:
                 if check_ingredients(drink) == True:
                     if payment(drink) == True:
                         print("Váš nápoj se připravuje.")
                 else: 
-                    print("Děkujeme, že jste využil tento automat na kávu. Brzy doplníme zásoby.")
+                    print("Děkujeme, že jste využili tento automat na kávu. Brzy doplníme zásoby.")
                     break           
         except KeyError:
                 print("Nerozumím Vaší volbě. ")
