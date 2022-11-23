@@ -7,45 +7,45 @@ def check_ingredients(drink):
     if (MENU[drink]['ingredients']['water']) <= resources['water']:
         if (MENU[drink]['ingredients']['milk']) <= resources['milk']:
             if (MENU[drink]['ingredients']['coffee']) <= resources['coffee']:
-                print("Na Váš nápoj máme dostatek ingrediencí")
+                print("There is enough ingredients to make your drink.")
                 resources['water'] -= (MENU[drink]['ingredients']['water'])
                 resources['milk'] -= (MENU[drink]['ingredients']['milk'])
                 resources['coffee'] -= (MENU[drink]['ingredients']['coffee'])
                 return True
             else:
-                print("Na Váš nápoj bohužel nemáme dostatek ingrediencí.")
+                print("Unfortunately, there is not enough ingredients to make your drink.")
                 return False
         else:
-            print("Na Váš nápoj bohužel nemáme dostatek ingrediencí.")   
+            print("Unfortunately, there is not enough ingredients to make your drink.")   
             return False
     else:
-        print("Na Váš nápoj bohužel nemáme dostatek ingrediencí.")
+        print("Unfortunately, there is not enough ingredients to make your drink.")
         return False
         
 
 def payment(drink):
-    print ("Prosím, vložte mince 1, 2, 5, 10, 20, 50")
-    payment_1 = int(input("Kolik 1Kč chcete vložit?: "))
-    payment_2 = int(input("Kolik 2Kč chcete vložit?: "))
-    payment_5 = int(input("Kolik 5Kč chcete vložit?: "))
-    payment_10 = int(input("Kolik 10Kč chcete vložit?: "))
-    payment_20 = int(input("Kolik 20Kč chcete vložit?: "))
-    payment_50 = int(input("Kolik 50Kč chcete vložit?: "))
+    print ("Please insert your coins. Coffee machine accepts 1CZK, 2CZK, 5CZK, 10CZK, 20CZK, 50CZK.")
+    payment_1 = int(input("How many 1CZK will you insert?: "))
+    payment_2 = int(input("How many 2CZK will you insert?: "))
+    payment_5 = int(input("How many 5CZK will you insert?: "))
+    payment_10 = int(input("How many 10CZK will you insert?: "))
+    payment_20 = int(input("How many 20CZK will you insert?: "))
+    payment_50 = int(input("How many 50CZK will you insert?: "))
     
     totall = int(payment_1*1 + payment_2*2 + payment_5*5 + payment_10*10 + payment_20*20 + payment_50*50)
     
-    print(f"Celkem jste vložili {totall}Kč")
-    print(f"Cena {drink} je {MENU [drink]['cost']} Kč")
+    print(f"You inserted {totall}CZK in totall.")
+    print(f"{drink} costs {MENU [drink]['cost']} CZK")
     
     if totall > MENU[drink]['cost']:
-        print(f"Zde máte nazpět {totall - MENU [drink]['cost']}Kč")
+        print(f"Here is your money back - {totall - MENU [drink]['cost']}CZK")
         return True
     elif totall < MENU [drink]['cost']:
-        print("Nevložili jste dostatečný obnos peněz k zaplacení Vašeho nápoje.")
+        print("You did not insert enough money to pay for your drink.")
         payment(drink)
         return True
     else:
-        print("Platba byla přesná, děkujeme.")
+        print("Your payment was accutate, thank you.")
         return True
     
     
@@ -54,24 +54,24 @@ def payment(drink):
 def coffee_machine():
     print (logo)
     while True:
-        drink = input("Co byste si dal? (espresso/latte/cappuccino): Pro vypnutí automatu napište 'konec'. " ).lower()        
+        drink = input("What coffee would you like to order? (espresso/latte/cappuccino). \nTo turn off the coffee machine type 'end'.\nTo check remaining resources type 'report").lower()        
         try:
             if drink == "report":
-                print(f"Voda: {resources['water']}")
-                print(f"Mléko: {resources['milk']}")
-                print(f"Káva: {resources['coffee']}")
-            elif drink == "konec":
-                print("Děkujeme, že jste využili tento automat na kávu.")
+                print(f"Water: {resources['water']}")
+                print(f"Milk: {resources['milk']}")
+                print(f"Coffee: {resources['coffee']}")
+            elif drink == "end":
+                print("Thank you for using our coffee machine. Have a nice day!")
                 break
             elif drink == drink:
                 if check_ingredients(drink) == True:
                     if payment(drink) == True:
-                        print("Váš nápoj se připravuje.")
+                        print("Your drink is being prepared.")
                 else: 
-                    print("Děkujeme, že jste využili tento automat na kávu. Brzy doplníme zásoby.")
+                    print("Thank you for using our coffee machine. We will refill resources soon. Have a nice day.")
                     break           
         except KeyError:
-                print("Nerozumím Vaší volbě. ")
+                print("I do not understand your choice. ")
     
 coffee_machine()
 
