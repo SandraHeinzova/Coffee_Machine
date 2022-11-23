@@ -15,3 +15,14 @@ logo = """
 """
 
 # Credit = Joe Jacques
+
+coffee = """
+   ( (
+    ) )
+  ........
+  |      |]
+  \      /    
+   `----'
+"""
+
+# credit = Jen Carlson
